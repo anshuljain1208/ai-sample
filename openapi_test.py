@@ -1,20 +1,20 @@
 import delimited
 import openai
+import os
 from openai import OpenAI
 
-api_key = "sk-ycneMaMqkMDhKnf3BlQbbJMIhcz790kU3SXd1TMClCT3BlbkFJWJAji9SAdnCZZz5dddhlbJ5bznkfeubhaQXmagXfAA"
+from dotenv import load_dotenv, find_dotenv
+_ = load_dotenv(find_dotenv()) # read local .env file
+openai.api_key = os.environ['OPENAI_API_KEY']
 
-client = OpenAI(
-    # This is the default and can be omitted
-    api_key=api_key,
-)
+client = OpenAI()
 def get_completion(prompt, model="gpt-3.5-turbo"):
     messages = [{"role": "user", "content": prompt}]
     response_open_ai = client.chat.completions.create(
         model=model,
         messages=messages,
         temperature=0,  # this is the degree of randomness o
-    )
+    ),
     return response_open_ai.choices[0].message.content
 
 #Tactic 1
